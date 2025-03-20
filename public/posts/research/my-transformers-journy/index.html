@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en"
+  dir="ltr">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+
+<link rel="icon" type="image/ico" href="//localhost:1313//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="//localhost:1313//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="//localhost:1313//apple-touch-icon.png">
+
+<meta name="description" content="A deep dive into implementing a transformer model from scratch, sharing challenges and learnings along the way"/>
+
+
+
+<title>
+    
+    Building a Transformer from Scratch: My Journey into the Heart of Modern AI | Sajjad Momeni
+    
+</title>
+
+<link rel="canonical" href="//localhost:1313/posts/research/my-transformers-journy/"/>
+
+<meta property="og:url" content="//localhost:1313/posts/research/my-transformers-journy/">
+  <meta property="og:site_name" content="Sajjad Momeni">
+  <meta property="og:title" content="Building a Transformer from Scratch: My Journey into the Heart of Modern AI">
+  <meta property="og:description" content="A deep dive into implementing a transformer model from scratch, sharing challenges and learnings along the way">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-03-13T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-03-13T00:00:00+00:00">
+    <meta property="article:tag" content="Machine-Learning">
+    <meta property="article:tag" content="Transformers">
+    <meta property="article:tag" content="Nlp">
+    <meta property="article:tag" content="Pytorch">
+    <meta property="article:tag" content="Deep-Learning">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/assets/combined.min.829116ec33ddb3bb868c9f590a489ccacb598fe5b75d430f94dbaf77d45c338d.css" media="all">
+
+
+
+
+
+</head>
+
+
+
+
+
+<body class="auto">
+
+  <div class="content">
+    <header>
+      
+
+<div class="header">
+
+    
+
+    <h1 class="header-title">
+        
+    </h1>
+
+    <div class="flex">
+        
+
+        
+    </div>
+
+    
+
+</div>
+
+    </header>
+
+    <main class="main">
+      
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false
+        });
+    });
+</script>
+
+<div class="single-container">
+  <header>
+    
+
+<nav class="main-nav">
+  
+    
+    <a href="/" class="nav-link">/home</a>
+    <a href="/posts/" class="nav-link">/posts</a>
+    <a href="/about/" class="nav-link">/about</a>
+  
+</nav>
+
+<style>
+.main-nav {
+  margin-bottom: 4rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-family: monospace;
+}
+
+.nav-link {
+  color: inherit;
+  text-decoration: none;
+  font-size: 1rem;
+  font-family: monospace;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+ 
+.rtl .main-nav a {
+  margin-right: 0;
+  margin-left: 1.5rem;
+}
+</style> 
+  </header>
+
+  <main>
+    <article class="content">
+      <h1 class="content-title">Building a Transformer from Scratch: My Journey into the Heart of Modern AI</h1>
+      
+      <h2 class="heading" id="introduction">
+  Introduction
+  <a class="anchor" href="#introduction">#</a>
+</h2>
+<p>When I first encountered transformer models like GPT and BERT, they seemed like magical black boxes. The capabilities were impressive, but I wanted to understand what was happening under the hood. So I embarked on a journey to build a transformer from scratch, component by component.</p>
+<p>In this post, I&rsquo;ll share what I learned, the challenges I faced, and the code I wrote to implement a GPT-style transformer model in PyTorch. By the end, I hope you&rsquo;ll have a deeper understanding of how these powerful models work.</p>
+<h2 class="heading" id="understanding-the-transformer-architecture">
+  Understanding the Transformer Architecture
+  <a class="anchor" href="#understanding-the-transformer-architecture">#</a>
+</h2>
+<p>Before diving into code, I needed to understand the core concepts. The transformer architecture, introduced in the <a href="https://arxiv.org/abs/1706.03762">&ldquo;Attention is All You Need&rdquo;</a> paper, revolutionized natural language processing by eliminating recurrence and convolutions entirely in favor of attention mechanisms.</p>
+<p>The key components of a transformer include:</p>
+<ol>
+<li><strong>Token Embeddings</strong>: Converting tokens to vectors</li>
+<li><strong>Positional Encodings</strong>: Adding position information</li>
+<li><strong>Multi-Head Attention</strong>: Allowing the model to focus on different parts of the input</li>
+<li><strong>Feed-Forward Networks</strong>: Processing each position independently</li>
+<li><strong>Layer Normalization</strong>: Stabilizing training</li>
+<li><strong>Residual Connections</strong>: Helping with gradient flow</li>
+</ol>
+<p>GPT models specifically use a decoder-only architecture with causal attention, meaning each token can only attend to itself and previous tokens.</p>
+<h2 class="heading" id="building-block-1-embeddings">
+  Building Block 1: Embeddings
+  <a class="anchor" href="#building-block-1-embeddings">#</a>
+</h2>
+<p>I started with the embedding layer, which converts token IDs to dense vectors:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Embedding</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, d_model, vocab_size):
+</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>d_model <span style="color:#f92672">=</span> d_model
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>vocab_size <span style="color:#f92672">=</span> vocab_size
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>embedding <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Embedding(vocab_size, d_model)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>embedding(x) <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>sqrt(self<span style="color:#f92672">.</span>d_model)
+</span></span></code></pre></div><p>The multiplication by <code>sqrt(d_model)</code> is a scaling factor that helps maintain the variance of the forward pass, as mentioned in the original paper.</p>
+<h2 class="heading" id="building-block-2-positional-encoding">
+  Building Block 2: Positional Encoding
+  <a class="anchor" href="#building-block-2-positional-encoding">#</a>
+</h2>
+<p>Next, I implemented positional encoding to give the model information about token positions:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PositionalEncoding</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, d_model, max_seq_length<span style="color:#f92672">=</span><span style="color:#ae81ff">5000</span>, dropout<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>):
+</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Create positional encoding matrix</span>
+</span></span><span style="display:flex;"><span>        pe <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(max_seq_length, d_model)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Create position tensor</span>
+</span></span><span style="display:flex;"><span>        position <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, max_seq_length, dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float)<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Create division term</span>
+</span></span><span style="display:flex;"><span>        div_term <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>exp(torch<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, d_model, <span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>float() <span style="color:#f92672">*</span> (<span style="color:#f92672">-</span>math<span style="color:#f92672">.</span>log(<span style="color:#ae81ff">10000.0</span>) <span style="color:#f92672">/</span> d_model))
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Apply sine to even indices</span>
+</span></span><span style="display:flex;"><span>        pe[:, <span style="color:#ae81ff">0</span>::<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sin(position <span style="color:#f92672">*</span> div_term)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Apply cosine to odd indices</span>
+</span></span><span style="display:flex;"><span>        pe[:, <span style="color:#ae81ff">1</span>::<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cos(position <span style="color:#f92672">*</span> div_term[:<span style="color:#f92672">-</span>(<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> d_model <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>)])
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Add batch dimension</span>
+</span></span><span style="display:flex;"><span>        pe <span style="color:#f92672">=</span> pe<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Register buffer (important for model saving/loading)</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>register_buffer(<span style="color:#e6db74">&#39;pe&#39;</span>, pe)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Initialize dropout</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>dropout <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(dropout)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> x <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>pe[:, :x<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">1</span>)]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>dropout(x)
+</span></span></code></pre></div><p>This creates a unique pattern for each position using sine and cosine functions of different frequencies. The beauty of this approach is that it allows the model to extrapolate to sequence lengths not seen during training.</p>
+<h2 class="heading" id="building-block-3-attention-mechanism">
+  Building Block 3: Attention Mechanism
+  <a class="anchor" href="#building-block-3-attention-mechanism">#</a>
+</h2>
+<p>The heart of the transformer is the attention mechanism. I implemented it step by step:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Head</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, d_model, num_heads, dropout<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>):
+</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>d_model <span style="color:#f92672">=</span> d_model
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>num_heads <span style="color:#f92672">=</span> num_heads
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>dropout <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(dropout)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>q_proj <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(d_model, d_model)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>k_proj <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(d_model, d_model)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>v_proj <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(d_model, d_model)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>out_proj <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(d_model, d_model)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x, mask<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>        Q <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>q_proj(x)
+</span></span><span style="display:flex;"><span>        K <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>k_proj(x)
+</span></span><span style="display:flex;"><span>        V <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>v_proj(x)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        scores <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>matmul(Q, K<span style="color:#f92672">.</span>transpose(<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)) <span style="color:#f92672">/</span> math<span style="color:#f92672">.</span>sqrt(self<span style="color:#f92672">.</span>d_model)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> mask <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>            scores <span style="color:#f92672">=</span> scores<span style="color:#f92672">.</span>masked_fill(mask <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1e9</span>)
+</span></span><span style="display:flex;"><span>        attention <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>softmax(scores, dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        output <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>matmul(attention, V)
+</span></span><span style="display:flex;"><span>        output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>out_proj(self<span style="color:#f92672">.</span>dropout(output))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> output, attention
+</span></span></code></pre></div><p>Then I extended it to multi-head attention:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MultiHeadAttention</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, d_model, num_heads, dropout<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>):
+</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>d_model <span style="color:#f92672">=</span> d_model
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>num_heads <span style="color:#f92672">=</span> num_heads
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">assert</span> d_model <span style="color:#f92672">%</span> num_heads <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;d_model must be divisible by num_heads&#34;</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>head_dim <span style="color:#f92672">=</span> d_model <span style="color:#f92672">//</span> num_heads
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>heads <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>ModuleList([Head(self<span style="color:#f92672">.</span>head_dim, num_heads, dropout) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(num_heads)])
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>output_linear <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(d_model, d_model)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>dropout <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(dropout)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x, mask<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>        batch_size <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        outputs <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        attentions <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> head <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>heads:
+</span></span><span style="display:flex;"><span>            output, attention <span style="color:#f92672">=</span> head(x, mask)
+</span></span><span style="display:flex;"><span>            outputs<span style="color:#f92672">.</span>append(output)
+</span></span><span style="display:flex;"><span>            attentions<span style="color:#f92672">.</span>append(attention)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Concatenate outputs from all heads</span>
+</span></span><span style="display:flex;"><span>        output <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat(outputs, dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Apply final linear projection</span>
+</span></span><span style="display:flex;"><span>        output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>output_linear(output)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>dropout(output)
+</span></span></code></pre></div><h2 class="heading" id="building-block-4-feed-forward-network">
+  Building Block 4: Feed-Forward Network
+  <a class="anchor" href="#building-block-4-feed-forward-network">#</a>
+</h2>
+<p>The feed-forward network processes each position independently:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FeedForward</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, d_model, hidden_dim):
+</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>d_model <span style="color:#f92672">=</span> d_model
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>hidden_dim <span style="color:#f92672">=</span> hidden_dim
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>linear1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(d_model, hidden_dim)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>linear2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(hidden_dim, d_model)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>linear2(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>linear1(x)))
+</span></span></code></pre></div><p>This expands the input dimension, applies non-linearity, and then projects back to the original dimension.</p>
+<h2 class="heading" id="building-block-5-encoder-and-decoder-layers">
+  Building Block 5: Encoder and Decoder Layers
+  <a class="anchor" href="#building-block-5-encoder-and-decoder-layers">#</a>
+</h2>
+<p>Next, I combined attention and feed-forward networks with residual connections and layer normalization:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EncoderLayer</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, d_model, num_heads, hidden_dim<span style="color:#f92672">=</span><span style="color:#ae81ff">2048</span>, dropout<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>):
+</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Self-attention layer</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>self_attn <span style="color:#f92672">=</span> MultiHeadAttention(d_model, num_heads)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Feed-forward network</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>feed_forward <span style="color:#f92672">=</span> FeedForward(d_model, hidden_dim)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Layer normalization</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>norm1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>LayerNorm(d_model)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>norm2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>LayerNorm(d_model)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Dropout</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>dropout <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(dropout)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x, mask<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Self-attention with residual connection and layer norm</span>
+</span></span><span style="display:flex;"><span>        attn_output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>self_attn(x, mask)
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>norm1(x <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>dropout(attn_output))
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Feed-forward with residual connection and layer norm</span>
+</span></span><span style="display:flex;"><span>        ff_output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>feed_forward(x)
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>norm2(x <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>dropout(ff_output))
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> x
+</span></span></code></pre></div><h2 class="heading" id="building-block-6-the-complete-gpt-model">
+  Building Block 6: The Complete GPT Model
+  <a class="anchor" href="#building-block-6-the-complete-gpt-model">#</a>
+</h2>
+<p>Finally, I put everything together to create a GPT model:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GPT</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, d_model, num_heads, num_layers, vocab_size, max_seq_length<span style="color:#f92672">=</span><span style="color:#ae81ff">5000</span>, dropout<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>):
+</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Token embedding and positional encoding</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>embedding <span style="color:#f92672">=</span> Embedding(d_model, vocab_size)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>positional_encoding <span style="color:#f92672">=</span> PositionalEncoding(d_model, max_seq_length, dropout)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Stack of decoder-style layers (self-attention only)</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>layers <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>ModuleList([EncoderLayer(d_model, num_heads) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(num_layers)])
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Final normalization and projection</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>norm <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>LayerNorm(d_model)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>output_linear <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(d_model, vocab_size)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x, mask<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Create causal mask if not provided</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> mask <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>            mask <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>generate_square_subsequent_mask(x<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">1</span>))<span style="color:#f92672">.</span>to(x<span style="color:#f92672">.</span>device)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Apply embedding and positional encoding</span>
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>embedding(x)
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>positional_encoding(x)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Apply transformer layers</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> layer <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>layers:
+</span></span><span style="display:flex;"><span>            x <span style="color:#f92672">=</span> layer(x, mask)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Apply final normalization</span>
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>norm(x)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Project to vocabulary</span>
+</span></span><span style="display:flex;"><span>        output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>output_linear(x)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> output
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_square_subsequent_mask</span>(self, sz):
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;Generate a square mask for the sequence. The masked positions are filled with float(&#39;-inf&#39;).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Unmasked positions are filled with float(0.0).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        mask <span style="color:#f92672">=</span> (torch<span style="color:#f92672">.</span>triu(torch<span style="color:#f92672">.</span>ones(sz, sz)) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        mask <span style="color:#f92672">=</span> mask<span style="color:#f92672">.</span>float()<span style="color:#f92672">.</span>masked_fill(mask <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, float(<span style="color:#e6db74">&#39;-inf&#39;</span>))<span style="color:#f92672">.</span>masked_fill(mask <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>, float(<span style="color:#ae81ff">0.0</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> mask
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate</span>(self, idx, max_new_tokens, temperature<span style="color:#f92672">=</span><span style="color:#ae81ff">1.0</span>, top_k<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;Generate new tokens given a context.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Generate tokens auto-regressively</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(max_new_tokens):
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Crop context to the last max_seq_length tokens if needed</span>
+</span></span><span style="display:flex;"><span>            idx_cond <span style="color:#f92672">=</span> idx <span style="color:#66d9ef">if</span> idx<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">&lt;=</span> self<span style="color:#f92672">.</span>positional_encoding<span style="color:#f92672">.</span>pe<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">else</span> idx[:, <span style="color:#f92672">-</span>self<span style="color:#f92672">.</span>positional_encoding<span style="color:#f92672">.</span>pe<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">1</span>):]
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Get predictions</span>
+</span></span><span style="display:flex;"><span>            logits <span style="color:#f92672">=</span> self(idx_cond)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Focus on the last token</span>
+</span></span><span style="display:flex;"><span>            logits <span style="color:#f92672">=</span> logits[:, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, :] <span style="color:#f92672">/</span> temperature
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Optional top-k sampling</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> top_k <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>                v, _ <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>topk(logits, min(top_k, logits<span style="color:#f92672">.</span>size(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)))
+</span></span><span style="display:flex;"><span>                logits[logits <span style="color:#f92672">&lt;</span> v[:, [<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]] <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>float(<span style="color:#e6db74">&#39;Inf&#39;</span>)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Apply softmax to get probabilities</span>
+</span></span><span style="display:flex;"><span>            probs <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>softmax(logits, dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Sample from the distribution</span>
+</span></span><span style="display:flex;"><span>            idx_next <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>multinomial(probs, num_samples<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Append to the sequence</span>
+</span></span><span style="display:flex;"><span>            idx <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat((idx, idx_next), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> idx
+</span></span></code></pre></div><h2 class="heading" id="training-the-model">
+  Training the Model
+  <a class="anchor" href="#training-the-model">#</a>
+</h2>
+<p>With the model architecture in place, I created a training pipeline:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Simple text dataset</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TextDataset</span>(Dataset):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, text, block_size):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>block_size <span style="color:#f92672">=</span> block_size
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Create a character-level tokenizer (for simplicity)</span>
+</span></span><span style="display:flex;"><span>        chars <span style="color:#f92672">=</span> sorted(list(set(text)))
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>vocab_size <span style="color:#f92672">=</span> len(chars)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>stoi <span style="color:#f92672">=</span> {ch: i <span style="color:#66d9ef">for</span> i, ch <span style="color:#f92672">in</span> enumerate(chars)}
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>itos <span style="color:#f92672">=</span> {i: ch <span style="color:#66d9ef">for</span> i, ch <span style="color:#f92672">in</span> enumerate(chars)}
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Encode the text</span>
+</span></span><span style="display:flex;"><span>        data <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([self<span style="color:#f92672">.</span>stoi[c] <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> text], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>long)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Create examples</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>examples <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(data) <span style="color:#f92672">-</span> block_size, <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            x <span style="color:#f92672">=</span> data[i:i<span style="color:#f92672">+</span>block_size]
+</span></span><span style="display:flex;"><span>            y <span style="color:#f92672">=</span> data[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:i<span style="color:#f92672">+</span>block_size<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>examples<span style="color:#f92672">.</span>append((x, y))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __len__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> len(self<span style="color:#f92672">.</span>examples)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __getitem__(self, idx):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>examples[idx]
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">decode</span>(self, tokens):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join([self<span style="color:#f92672">.</span>itos[int(i)] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> tokens])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Load your text data</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;your_text_file.txt&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;utf-8&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>        text <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Create dataset and dataloader</span>
+</span></span><span style="display:flex;"><span>    dataset <span style="color:#f92672">=</span> TextDataset(text, BLOCK_SIZE)
+</span></span><span style="display:flex;"><span>    data_loader <span style="color:#f92672">=</span> DataLoader(dataset, batch_size<span style="color:#f92672">=</span>BATCH_SIZE, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Initialize model</span>
+</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">=</span> GPT(
+</span></span><span style="display:flex;"><span>        d_model<span style="color:#f92672">=</span>D_MODEL,
+</span></span><span style="display:flex;"><span>        num_heads<span style="color:#f92672">=</span>NUM_HEADS,
+</span></span><span style="display:flex;"><span>        num_layers<span style="color:#f92672">=</span>NUM_LAYERS,
+</span></span><span style="display:flex;"><span>        vocab_size<span style="color:#f92672">=</span>dataset<span style="color:#f92672">.</span>vocab_size,
+</span></span><span style="display:flex;"><span>        dropout<span style="color:#f92672">=</span>DROPOUT
+</span></span><span style="display:flex;"><span>    )<span style="color:#f92672">.</span>to(DEVICE)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Loss function and optimizer</span>
+</span></span><span style="display:flex;"><span>    criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
+</span></span><span style="display:flex;"><span>    optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>AdamW(model<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span>LEARNING_RATE)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Training loop</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(MAX_EPOCHS):
+</span></span><span style="display:flex;"><span>        model<span style="color:#f92672">.</span>train()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> x, y <span style="color:#f92672">in</span> get_batch(data_loader):
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Forward pass</span>
+</span></span><span style="display:flex;"><span>            logits <span style="color:#f92672">=</span> model(x)
+</span></span><span style="display:flex;"><span>            loss <span style="color:#f92672">=</span> criterion(logits<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, dataset<span style="color:#f92672">.</span>vocab_size), y<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Backward pass and optimize</span>
+</span></span><span style="display:flex;"><span>            optimizer<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>            loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>            optimizer<span style="color:#f92672">.</span>step()
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Logging and evaluation...</span>
+</span></span></code></pre></div><h2 class="heading" id="generating-text">
+  Generating Text
+  <a class="anchor" href="#generating-text">#</a>
+</h2>
+<p>After training, I could generate text with the model:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_text</span>(
+</span></span><span style="display:flex;"><span>    model_path,
+</span></span><span style="display:flex;"><span>    text_file,
+</span></span><span style="display:flex;"><span>    prompt<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>    max_new_tokens<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>,
+</span></span><span style="display:flex;"><span>    temperature<span style="color:#f92672">=</span><span style="color:#ae81ff">0.8</span>,
+</span></span><span style="display:flex;"><span>    top_k<span style="color:#f92672">=</span><span style="color:#ae81ff">40</span>
+</span></span><span style="display:flex;"><span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Load the text file to get the vocabulary</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(text_file, <span style="color:#e6db74">&#39;r&#39;</span>, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;utf-8&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>        text <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Create dataset to get tokenizer</span>
+</span></span><span style="display:flex;"><span>    dataset <span style="color:#f92672">=</span> TextDataset(text, block_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Load model</span>
+</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">=</span> GPT(
+</span></span><span style="display:flex;"><span>        d_model<span style="color:#f92672">=</span><span style="color:#ae81ff">384</span>,
+</span></span><span style="display:flex;"><span>        num_heads<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span>,
+</span></span><span style="display:flex;"><span>        num_layers<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span>,
+</span></span><span style="display:flex;"><span>        vocab_size<span style="color:#f92672">=</span>dataset<span style="color:#f92672">.</span>vocab_size,
+</span></span><span style="display:flex;"><span>        dropout<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>
+</span></span><span style="display:flex;"><span>    )<span style="color:#f92672">.</span>to(device)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>load_state_dict(torch<span style="color:#f92672">.</span>load(model_path, map_location<span style="color:#f92672">=</span>device))
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>eval()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Tokenize the prompt</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> prompt:
+</span></span><span style="display:flex;"><span>        context <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[dataset<span style="color:#f92672">.</span>stoi<span style="color:#f92672">.</span>get(c, <span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> prompt]], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>long)<span style="color:#f92672">.</span>to(device)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        context <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>long, device<span style="color:#f92672">=</span>device)
+</span></span><span style="display:flex;"><span>        context[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> dataset<span style="color:#f92672">.</span>stoi<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Generate text</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>        generated <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>generate(
+</span></span><span style="display:flex;"><span>            context,
+</span></span><span style="display:flex;"><span>            max_new_tokens<span style="color:#f92672">=</span>max_new_tokens,
+</span></span><span style="display:flex;"><span>            temperature<span style="color:#f92672">=</span>temperature,
+</span></span><span style="display:flex;"><span>            top_k<span style="color:#f92672">=</span>top_k
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dataset<span style="color:#f92672">.</span>decode(generated[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>tolist())
+</span></span></code></pre></div><h2 class="heading" id="challenges-and-learnings">
+  Challenges and Learnings
+  <a class="anchor" href="#challenges-and-learnings">#</a>
+</h2>
+<p>Building a transformer from scratch wasn&rsquo;t easy. Here are some challenges I faced:</p>
+<ol>
+<li>
+<p><strong>Dimension Mismatch</strong>: Getting the tensor dimensions right in the attention mechanism was tricky, especially with batch processing and multiple heads.</p>
+</li>
+<li>
+<p><strong>Numerical Stability</strong>: I had to be careful with the implementation of positional encoding and attention scores to avoid numerical issues.</p>
+</li>
+<li>
+<p><strong>Memory Usage</strong>: Transformers can be memory-intensive, especially with long sequences. I had to optimize my implementation to fit within my hardware constraints.</p>
+</li>
+<li>
+<p><strong>Debugging</strong>: When things went wrong, it was often hard to pinpoint the exact issue. I learned to add extensive logging and visualization to debug effectively.</p>
+</li>
+</ol>
+<p>Despite these challenges, the journey was incredibly rewarding. I gained a deep understanding of how transformers work, which has been invaluable for my work in NLP.</p>
+<h2 class="heading" id="results-and-next-steps">
+  Results and Next Steps
+  <a class="anchor" href="#results-and-next-steps">#</a>
+</h2>
+<p>My implementation successfully learned to generate coherent text, though of course not at the level of state-of-the-art models like GPT-3 or GPT-4. Here&rsquo;s a sample of text generated by my model:</p>
+<pre tabindex="0"><code>Once upon a time, there was a small village nestled in the mountains...
+</code></pre><p>For those interested in trying this out, the complete code is available in my GitHub repository.</p>
+<h2 class="heading" id="future-improvements">
+  Future Improvements
+  <a class="anchor" href="#future-improvements">#</a>
+</h2>
+<p>There are several ways to improve this implementation:</p>
+<ol>
+<li>
+<p><strong>Better Tokenization</strong>: Implement subword tokenization (BPE, WordPiece) instead of character-level tokenization.</p>
+</li>
+<li>
+<p><strong>Larger Model</strong>: Increase model size (d_model, num_heads, num_layers) for more capacity.</p>
+</li>
+<li>
+<p><strong>Learning Rate Scheduling</strong>: Implement learning rate warmup and decay for better convergence.</p>
+</li>
+<li>
+<p><strong>Mixed Precision Training</strong>: Use mixed precision to speed up training and reduce memory usage.</p>
+</li>
+<li>
+<p><strong>Pre-training and Fine-tuning</strong>: Implement a proper pre-training and fine-tuning pipeline.</p>
+</li>
+</ol>
+<h2 class="heading" id="conclusion">
+  Conclusion
+  <a class="anchor" href="#conclusion">#</a>
+</h2>
+<p>Building a transformer from scratch has been an enlightening journey. It&rsquo;s demystified what once seemed like magic and given me a solid foundation for working with these powerful models.</p>
+<p>If you&rsquo;re interested in understanding transformers deeply, I highly recommend implementing one yourself. Start simple, build component by component, and test thoroughly at each step.</p>
+<p>Happy coding!</p>
+<hr>
+<p><em>This blog post is part of my series on understanding deep learning from first principles. If you found this helpful, please share it with others who might benefit.</em></p>
+
+    </article>
+  </main>
+</div>
+
+<style>
+.single-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: monospace;
+  line-height: 1.6;
+}
+
+.site-title {
+  font-size: 2.5rem;
+  font-weight: normal;
+  margin-bottom: 1.5rem;
+  font-family: 'Times New Roman', serif;
+}
+
+.content {
+  margin-top: 2rem;
+}
+
+.content-title {
+  font-size: 2rem;
+  font-weight: normal;
+  margin-bottom: 2rem;
+}
+
+.hero-container {
+  margin: 2rem 0;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+ 
+.katex-display {
+  margin: 1.5em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5em 0;
+}
+
+.katex {
+  font-size: 1.1em;
+}
+
+ 
+@media (max-width: 768px) {
+  .site-title {
+    font-size: 2rem;
+  }
+  
+  .content-title {
+    font-size: 1.75rem;
+  }
+
+  .hero-container {
+    margin: 1.5rem 0;
+  }
+
+  .katex {
+    font-size: 1em;
+  }
+}
+</style>
+
+    </main>
+  </div>
+
+  <footer>
+    
+
+    
+    <p>Powered by
+        <a href="https://gohugo.io/">Hugo</a>
+        and
+        <a href="https://github.com/tomfran/typo">tomfran/typo</a>
+    </p>
+    
+    
+    
+
+
+  </footer>
+
+  
+
+</body>
+
+<script src="/js/theme-switch.js"></script>
+<script defer src="/js/copy-code.js"></script>
+</html>

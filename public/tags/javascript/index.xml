@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Javascript on Sajjad Momeni</title>
+    <link>//localhost:1313/tags/javascript/</link>
+    <description>Recent content in Javascript on Sajjad Momeni</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 13 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding React Hooks</title>
+      <link>//localhost:1313/posts/software/react-hooks/</link>
+      <pubDate>Wed, 13 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/posts/software/react-hooks/</guid>
+      <description>&lt;h1 class=&#34;heading&#34; id=&#34;understanding-react-hooks&#34;&gt;&#xA;  Understanding React Hooks&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#understanding-react-hooks&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h1&gt;&#xA;&lt;p&gt;React Hooks were introduced in React 16.8 as a way to use state and other React features without writing a class. They allow you to &amp;ldquo;hook into&amp;rdquo; React state and lifecycle features from function components.&lt;/p&gt;&#xA;&lt;h2 class=&#34;heading&#34; id=&#34;why-hooks&#34;&gt;&#xA;  Why Hooks?&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#why-hooks&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;p&gt;Before Hooks, if you wanted to add state to a component, you had to convert it to a class. This often led to complex components that were difficult to understand and reuse. Hooks solve this problem by allowing you to:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

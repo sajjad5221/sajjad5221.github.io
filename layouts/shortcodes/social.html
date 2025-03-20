@@ -1,0 +1,37 @@
+<div class="social-links">
+  {{ .Inner | markdownify }}
+</div>
+
+<style>
+.social-links {
+  margin-top: 2rem;
+}
+
+.social-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.social-links li {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+[dir="rtl"] .social-links li {
+  margin-right: 0;
+  margin-left: 1rem;
+}
+
+.social-links a {
+  color: inherit;
+  text-decoration: none;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.social-links a:hover {
+  border-bottom-color: currentColor;
+}
+</style> 

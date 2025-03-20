@@ -1,0 +1,81 @@
+{{ define "main" }}
+<div class="home-container">
+  <header>
+    {{ partial "nav.html" . }}
+  </header>
+
+  <main>
+    <section class="posts-list">
+      {{ range .Pages }}
+      <article class="post-item">
+        <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+        <a href="{{ .RelPermalink }}" class="post-link">{{ .Title }}</a>
+      </article>
+      {{ end }}
+    </section>
+  </main>
+</div>
+
+<style>
+.home-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: monospace;
+  line-height: 1.6;
+}
+
+.site-title {
+  font-size: 2.5rem;
+  font-weight: normal;
+  margin-bottom: 1.5rem;
+  font-family: 'Times New Roman', serif;
+}
+
+.posts-list {
+  margin-top: 3rem;
+}
+
+.post-item {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.post-date {
+  color: #666;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.post-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.post-link:hover {
+  text-decoration: underline;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .post-date {
+    color: #999;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .site-title {
+    font-size: 2rem;
+  }
+  
+  .post-item {
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+  }
+}
+</style>
+{{ end }} 

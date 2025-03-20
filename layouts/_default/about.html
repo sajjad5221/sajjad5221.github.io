@@ -1,0 +1,80 @@
+{{ define "main" }}
+<div class="about-container {{ if eq .Language.Lang "fa" }}rtl{{ end }}">
+  <div class="about-header">
+    <div class="profile-image">
+      <img src="/images/profile.png" alt="Sajjad Momeni" />
+    </div>
+    <h1 class="about-title">{{ .Title }}</h1>
+  </div>
+  
+  <div class="about-content">
+    {{ .Content }}
+  </div>
+</div>
+
+<style>
+.about-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.profile-image {
+  width: 250px;
+  height: 250px;
+  margin: 0 auto 2rem;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.about-content {
+  font-size: 1.1rem;
+  color: #444;
+}
+
+/* RTL Support */
+.rtl {
+  direction: rtl;
+  font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .about-content {
+    color: #bbb;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .about-title {
+    font-size: 2rem;
+  }
+}
+</style>
+{{ end }} 
