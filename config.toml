@@ -1,7 +1,13 @@
 baseURL = '/'
 languageCode = 'en-us'
+defaultContentLanguage = 'en-us'
 title = 'My Blog'
-theme = 'PaperMod'
+theme = 'typo'
+
+[module]
+[module.hugoVersion]
+extended = false
+min = "0.116.0"
 
 # Main menu configuration
 [[menu.main]]
@@ -38,6 +44,11 @@ pre = "search"
   ShowWordCount = true
   ShowRssButtonInSectionTermList = true
   UseHugoToc = true
+
+[params.breadcrumbs]
+enabled = true
+showCurrentPage = true
+home = "Home"
 
 [markup]
   [markup.goldmark]
