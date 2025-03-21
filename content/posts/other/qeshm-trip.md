@@ -2,10 +2,8 @@
 title: "روز اول سفر به قشم – ماجراهای قطار و اولین آشنایی‌ها"
 titleFa: "روز اول سفر به قشم – ماجراهای قطار و اولین آشنایی‌ها"
 date: "2023-06-15"
-description: "A fun travel story about the first day of a trip to Qeshm Island, starting with train adventures and new encounters."
-descriptionFa: "داستان سفری جذاب درباره روز اول سفر به جزیره قشم، شروع با ماجراهای قطار و آشنایی‌های جدید."
-excerpt: "A fun travel story about the first day of a trip to Qeshm Island, starting with train adventures and new encounters."
-excerptFa: "داستان سفری جذاب درباره روز اول سفر به جزیره قشم، شروع با ماجراهای قطار و آشنایی‌های جدید."
+description: "داستان سفری جذاب درباره روز اول سفر به جزیره قشم، شروع با ماجراهای قطار و آشنایی‌های جدید."
+excerpt: "داستان سفری جذاب درباره روز اول سفر به جزیره قشم، شروع با ماجراهای قطار و آشنایی‌های جدید."
 category: "Travel"
 tags: ["Qeshm", "Travel", "Persian Gulf", "Train Journey"]
 author: "Ali Momeni"

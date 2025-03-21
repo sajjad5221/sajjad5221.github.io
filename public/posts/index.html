@@ -128,23 +128,89 @@
     <section class="posts-list">
       
       <article class="post-item ">
-        <time class="post-date" datetime="2024-03-20">2024-03-20</time>
-        <a href="/posts/research/what-is-deepseek/" class="post-link">DeepSeek: A Deep Dive into the Next Generation Language Model</a>
+        <div class="post-content">
+          <a href="/posts/research/what-is-deepseek/" class="post-link">DeepSeek: A Deep Dive into the Next Generation Language Model</a>
+          
+          <p class="post-excerpt">Discover how DeepSeek is pushing the boundaries of language models with its innovative architecture and impressive performance metrics</p>
+          
+          <div class="post-tags">
+            
+            <span class="tag">artificial-intelligence</span>
+            
+            <span class="tag">language-models</span>
+            
+            <span class="tag">deep-learning</span>
+            
+            <span class="tag">nlp</span>
+            
+            <span class="tag">deepseek</span>
+            
+            <span class="tag">machine-learning</span>
+            
+          </div>
+        </div>
       </article>
       
       <article class="post-item ">
-        <time class="post-date" datetime="2024-03-13">2024-03-13</time>
-        <a href="/posts/research/my-transformers-journy/" class="post-link">Building a Transformer from Scratch: My Journey into the Heart of Modern AI</a>
+        <div class="post-content">
+          <a href="/posts/research/my-transformers-journy/" class="post-link">Building a Transformer from Scratch: My Journey into the Heart of Modern AI</a>
+          
+          <p class="post-excerpt">A deep dive into implementing a transformer model from scratch, sharing challenges and learnings along the way</p>
+          
+          <div class="post-tags">
+            
+            <span class="tag">machine-learning</span>
+            
+            <span class="tag">transformers</span>
+            
+            <span class="tag">nlp</span>
+            
+            <span class="tag">pytorch</span>
+            
+            <span class="tag">deep-learning</span>
+            
+          </div>
+        </div>
       </article>
       
       <article class="post-item ">
-        <time class="post-date" datetime="2024-03-13">2024-03-13</time>
-        <a href="/posts/research/lunar-lander/" class="post-link">Reinforcement Learning Process and Its Application in Complex Problems</a>
+        <div class="post-content">
+          <a href="/posts/research/lunar-lander/" class="post-link">Reinforcement Learning Process and Its Application in Complex Problems</a>
+          
+          <p class="post-excerpt">Exploring the reinforcement learning process and its application in complex problems, including a complete example with Python code</p>
+          
+          <div class="post-tags">
+            
+            <span class="tag">machine-learning</span>
+            
+            <span class="tag">reinforcement-learning</span>
+            
+            <span class="tag">deep-learning</span>
+            
+            <span class="tag">python</span>
+            
+          </div>
+        </div>
       </article>
       
       <article class="post-item rtl">
-        <time class="post-date" datetime="2023-06-15">2023-06-15</time>
-        <a href="/posts/other/qeshm-trip/" class="post-link">روز اول سفر به قشم – ماجراهای قطار و اولین آشنایی‌ها</a>
+        <div class="post-content">
+          <a href="/posts/other/qeshm-trip/" class="post-link">روز اول سفر به قشم – ماجراهای قطار و اولین آشنایی‌ها</a>
+          
+          <p class="post-excerpt">داستان سفری جذاب درباره روز اول سفر به جزیره قشم، شروع با ماجراهای قطار و آشنایی‌های جدید.</p>
+          
+          <div class="post-tags">
+            
+            <span class="tag">Qeshm</span>
+            
+            <span class="tag">Travel</span>
+            
+            <span class="tag">Persian Gulf</span>
+            
+            <span class="tag">Train Journey</span>
+            
+          </div>
+        </div>
       </article>
       
     </section>
@@ -191,9 +257,24 @@
 
 .post-item {
   display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: #f8f9fa;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.post-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 120px;
 }
 
 .post-date {
@@ -202,19 +283,73 @@
   white-space: nowrap;
 }
 
+.post-category {
+  font-size: 0.8rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.post-content {
+  flex: 1;
+}
+
 .post-link {
-  color: inherit;
+  color: #2c3e50;
   text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
 .post-link:hover {
-  text-decoration: underline;
+  color: #3498db;
+}
+
+.post-excerpt {
+  color: #666;
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.tag {
+  background: #e9ecef;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #495057;
 }
 
  
 @media (prefers-color-scheme: dark) {
-  .post-date {
-    color: #999;
+  .post-item {
+    background: #2d3436;
+  }
+
+  .post-link {
+    color: #dfe6e9;
+  }
+
+  .post-excerpt {
+    color: #b2bec3;
+  }
+
+  .tag {
+    background: #636e72;
+    color: #dfe6e9;
+  }
+
+  .post-date, .post-category {
+    color: #b2bec3;
   }
 }
 
@@ -226,12 +361,23 @@
   
   .post-item {
     flex-direction: column;
-    gap: 0.25rem;
-    margin-bottom: 1.5rem;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .post-meta {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-width: auto;
   }
 
   .rtl .post-item {
     flex-direction: column;
+  }
+
+  .rtl .post-meta {
+    flex-direction: row-reverse;
   }
 }
 </style>

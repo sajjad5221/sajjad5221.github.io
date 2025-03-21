@@ -11,8 +11,17 @@
     <section class="posts-list">
       {{ range .Pages }}
       <article class="post-item {{ if .Params.rtl }}rtl{{ end }}">
-        <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
-        <a href="{{ .RelPermalink }}" class="post-link">{{ .Title }}</a>
+        <div class="post-content">
+          <a href="{{ .RelPermalink }}" class="post-link">{{ .Title }}</a>
+          {{ if .Params.excerpt }}
+          <p class="post-excerpt">{{ .Params.excerpt }}</p>
+          {{ end }}
+          <div class="post-tags">
+            {{ range .Params.tags }}
+            <span class="tag">{{ . }}</span>
+            {{ end }}
+          </div>
+        </div>
       </article>
       {{ end }}
     </section>
@@ -59,9 +68,24 @@
 
 .post-item {
   display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: #f8f9fa;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.post-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 120px;
 }
 
 .post-date {
@@ -70,19 +94,73 @@
   white-space: nowrap;
 }
 
+.post-category {
+  font-size: 0.8rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.post-content {
+  flex: 1;
+}
+
 .post-link {
-  color: inherit;
+  color: #2c3e50;
   text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
 .post-link:hover {
-  text-decoration: underline;
+  color: #3498db;
+}
+
+.post-excerpt {
+  color: #666;
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.tag {
+  background: #e9ecef;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #495057;
 }
 
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
-  .post-date {
-    color: #999;
+  .post-item {
+    background: #2d3436;
+  }
+
+  .post-link {
+    color: #dfe6e9;
+  }
+
+  .post-excerpt {
+    color: #b2bec3;
+  }
+
+  .tag {
+    background: #636e72;
+    color: #dfe6e9;
+  }
+
+  .post-date, .post-category {
+    color: #b2bec3;
   }
 }
 
@@ -94,12 +172,23 @@
   
   .post-item {
     flex-direction: column;
-    gap: 0.25rem;
-    margin-bottom: 1.5rem;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .post-meta {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-width: auto;
   }
 
   .rtl .post-item {
     flex-direction: column;
+  }
+
+  .rtl .post-meta {
+    flex-direction: row-reverse;
   }
 }
 </style>
