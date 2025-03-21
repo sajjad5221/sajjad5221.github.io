@@ -40,4 +40,4 @@ To create a new blog post:
 hugo new posts/category-name/post-name/index.md
 ```
 
-Add images to the same folder as the index.md file. 
+Add images to the same folder as the index.md file.

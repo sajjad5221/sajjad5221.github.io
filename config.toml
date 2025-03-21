@@ -5,6 +5,17 @@ title = 'My Blog'
 theme = 'typo'
 relativeURLs = true
 uglyURLs = false
+canonifyURLs = false
+absURL = false
+
+[security]
+  [security.exec]
+    allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$', '^hugo$']
+  [security.funcs]
+    getenv = ['^HUGO_']
+  [security.http]
+    methods = ['(?i)GET|POST']
+    urls = ['.*']
 
 [module]
 [module.hugoVersion]
