@@ -1,4 +1,4 @@
-baseURL = 'https://sajjad5221.github.io/'
+baseURL = '/'
 languageCode = 'en-us'
 title = 'My Blog'
 theme = 'PaperMod'
