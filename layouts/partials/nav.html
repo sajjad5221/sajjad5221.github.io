@@ -1,6 +1,6 @@
 {{ $currentPage := . }}
 
-<nav class="main-nav">
+<nav class="main-nav" dir="ltr">
   {{ with .Site.Menus.main }}
     {{ range . }}
       <a href="{{ .URL }}" class="nav-link">/{{ .Identifier }}</a>
@@ -31,11 +31,5 @@
 
 .nav-link:hover {
   text-decoration: underline;
-}
-
-/* RTL Support */
-.rtl .main-nav a {
-  margin-right: 0;
-  margin-left: 1.5rem;
 }
 </style> 

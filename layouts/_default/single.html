@@ -6,9 +6,6 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
 
-<!-- Add Vazir Font -->
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir.css" rel="stylesheet" type="text/css" />
-
 <!-- Initialize auto-render -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -47,22 +44,22 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
-  font-family: monospace;
+  font-family: 'Vazir', monospace; /* Use Vazir font */
   line-height: 1.6;
 }
 
 /* RTL Support */
 .rtl {
   direction: rtl;
-  font-family: Vazir, monospace;
+  font-family: 'Vazir', monospace; /* Ensure Vazir is used for RTL */
 }
 
 .rtl .content-title {
-  font-family: Vazir, 'Times New Roman', serif;
+  font-family: 'Vazir', 'Times New Roman', serif;
 }
 
 .rtl .site-title {
-  font-family: Vazir, 'Times New Roman', serif;
+  font-family: 'Vazir', 'Times New Roman', serif;
 }
 
 .site-title {
@@ -139,4 +136,4 @@
   }
 }
 </style>
-{{ end }} 
+{{ end }}
