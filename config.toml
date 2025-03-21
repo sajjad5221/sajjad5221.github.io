@@ -3,11 +3,13 @@ languageCode = 'en-us'
 defaultContentLanguage = 'en-us'
 title = 'My Blog'
 theme = 'typo'
+relativeURLs = true
+uglyURLs = false
 
 [module]
 [module.hugoVersion]
-extended = false
-min = "0.116.0"
+extended = true
+min = "0.92.0"
 
 # Main menu configuration
 [[menu.main]]
