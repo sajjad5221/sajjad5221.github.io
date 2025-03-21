@@ -5,10 +5,7 @@
   "builds": [
     {
       "src": "config.toml",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "public"
-      }
+      "use": "hugo"
     }
   ]
 } 
