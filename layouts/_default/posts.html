@@ -1,5 +1,8 @@
 {{ define "main" }}
-<div class="home-container">
+<!-- Add Vazir Font -->
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir.css" rel="stylesheet" type="text/css" />
+
+<div class="home-container {{ if .Params.rtl }}rtl{{ end }}">
   <header>
     {{ partial "nav.html" . }}
   </header>
@@ -7,7 +10,7 @@
   <main>
     <section class="posts-list">
       {{ range .Pages }}
-      <article class="post-item">
+      <article class="post-item {{ if .Params.rtl }}rtl{{ end }}">
         <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
         <a href="{{ .RelPermalink }}" class="post-link">{{ .Title }}</a>
       </article>
@@ -23,6 +26,24 @@
   padding: 2rem;
   font-family: monospace;
   line-height: 1.6;
+}
+
+/* RTL Support */
+.rtl {
+  direction: rtl;
+  font-family: Vazir, monospace;
+}
+
+.rtl .site-title {
+  font-family: Vazir, 'Times New Roman', serif;
+}
+
+.rtl .post-item {
+  flex-direction: row-reverse;
+}
+
+.rtl .post-date {
+  text-align: left;
 }
 
 .site-title {
@@ -75,6 +96,10 @@
     flex-direction: column;
     gap: 0.25rem;
     margin-bottom: 1.5rem;
+  }
+
+  .rtl .post-item {
+    flex-direction: column;
   }
 }
 </style>

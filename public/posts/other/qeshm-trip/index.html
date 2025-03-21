@@ -20,7 +20,7 @@
 
 <title>
     
-    First Day in Qeshm - Train Journey and First Encounters | Sajjad Momeni
+    روز اول سفر به قشم – ماجراهای قطار و اولین آشنایی‌ها | Sajjad Momeni
     
 </title>
 
@@ -28,7 +28,7 @@
 
 <meta property="og:url" content="//localhost:1313/posts/other/qeshm-trip/">
   <meta property="og:site_name" content="Sajjad Momeni">
-  <meta property="og:title" content="First Day in Qeshm - Train Journey and First Encounters">
+  <meta property="og:title" content="روز اول سفر به قشم – ماجراهای قطار و اولین آشنایی‌ها">
   <meta property="og:description" content="A fun travel story about the first day of a trip to Qeshm Island, starting with train adventures and new encounters.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
@@ -87,7 +87,32 @@
 
     <main class="main">
       
-<div class="single-container">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir.css" rel="stylesheet" type="text/css" />
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "\\(", right: "\\)", display: false}
+            ],
+            throwOnError: false
+        });
+    });
+</script>
+
+<div class="single-container rtl">
   <header>
     
 
@@ -130,7 +155,7 @@
 
   <main>
     <article class="content">
-      <h1 class="content-title">First Day in Qeshm - Train Journey and First Encounters</h1>
+      <h1 class="content-title">روز اول سفر به قشم – ماجراهای قطار و اولین آشنایی‌ها</h1>
       
       <h3 class="heading" id="روز-اول-سفر-به-قشم--ماجراهای-قطار-و-اولین-آشناییها">
   <strong>روز اول سفر به قشم – ماجراهای قطار و اولین آشنایی‌ها</strong>
@@ -192,6 +217,20 @@
   line-height: 1.6;
 }
 
+ 
+.rtl {
+  direction: rtl;
+  font-family: Vazir, monospace;
+}
+
+.rtl .content-title {
+  font-family: Vazir, 'Times New Roman', serif;
+}
+
+.rtl .site-title {
+  font-family: Vazir, 'Times New Roman', serif;
+}
+
 .site-title {
   font-size: 2.5rem;
   font-weight: normal;
@@ -225,6 +264,29 @@
 }
 
  
+.katex-display {
+  margin: 1.5em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5em 0;
+}
+
+.katex {
+  font-size: 1.1em;
+}
+
+ 
+.rtl .katex {
+  direction: ltr;  
+  text-align: left;
+}
+
+.rtl pre, .rtl code {
+  direction: ltr;  
+  text-align: left;
+}
+
+ 
 @media (max-width: 768px) {
   .site-title {
     font-size: 2rem;
@@ -236,6 +298,10 @@
 
   .hero-container {
     margin: 1.5rem 0;
+  }
+
+  .katex {
+    font-size: 1em;
   }
 }
 </style>

@@ -80,7 +80,10 @@
 
     <main class="main">
       
-<div class="home-container">
+
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir.css" rel="stylesheet" type="text/css" />
+
+<div class="home-container ">
   <header>
     
 
@@ -124,24 +127,24 @@
   <main>
     <section class="posts-list">
       
-      <article class="post-item">
+      <article class="post-item ">
+        <time class="post-date" datetime="2024-03-20">2024-03-20</time>
+        <a href="/posts/research/what-is-deepseek/" class="post-link">DeepSeek: A Deep Dive into the Next Generation Language Model</a>
+      </article>
+      
+      <article class="post-item ">
         <time class="post-date" datetime="2024-03-13">2024-03-13</time>
         <a href="/posts/research/my-transformers-journy/" class="post-link">Building a Transformer from Scratch: My Journey into the Heart of Modern AI</a>
       </article>
       
-      <article class="post-item">
+      <article class="post-item ">
         <time class="post-date" datetime="2024-03-13">2024-03-13</time>
         <a href="/posts/research/lunar-lander/" class="post-link">Reinforcement Learning Process and Its Application in Complex Problems</a>
       </article>
       
-      <article class="post-item">
+      <article class="post-item rtl">
         <time class="post-date" datetime="2023-06-15">2023-06-15</time>
-        <a href="/posts/other/qeshm-trip/" class="post-link">First Day in Qeshm - Train Journey and First Encounters</a>
-      </article>
-      
-      <article class="post-item">
-        <time class="post-date" datetime="0001-01-01">0001-01-01</time>
-        <a href="/posts/research/what-is-deepseek/" class="post-link"></a>
+        <a href="/posts/other/qeshm-trip/" class="post-link">روز اول سفر به قشم – ماجراهای قطار و اولین آشنایی‌ها</a>
       </article>
       
     </section>
@@ -155,6 +158,24 @@
   padding: 2rem;
   font-family: monospace;
   line-height: 1.6;
+}
+
+ 
+.rtl {
+  direction: rtl;
+  font-family: Vazir, monospace;
+}
+
+.rtl .site-title {
+  font-family: Vazir, 'Times New Roman', serif;
+}
+
+.rtl .post-item {
+  flex-direction: row-reverse;
+}
+
+.rtl .post-date {
+  text-align: left;
 }
 
 .site-title {
@@ -207,6 +228,10 @@
     flex-direction: column;
     gap: 0.25rem;
     margin-bottom: 1.5rem;
+  }
+
+  .rtl .post-item {
+    flex-direction: column;
   }
 }
 </style>

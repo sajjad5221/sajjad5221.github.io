@@ -6,6 +6,9 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
 
+<!-- Add Vazir Font -->
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir.css" rel="stylesheet" type="text/css" />
+
 <!-- Initialize auto-render -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -21,7 +24,7 @@
     });
 </script>
 
-<div class="single-container">
+<div class="single-container {{ if .Params.rtl }}rtl{{ end }}">
   <header>
     {{ partial "nav.html" . }}
   </header>
@@ -46,6 +49,20 @@
   padding: 2rem;
   font-family: monospace;
   line-height: 1.6;
+}
+
+/* RTL Support */
+.rtl {
+  direction: rtl;
+  font-family: Vazir, monospace;
+}
+
+.rtl .content-title {
+  font-family: Vazir, 'Times New Roman', serif;
+}
+
+.rtl .site-title {
+  font-family: Vazir, 'Times New Roman', serif;
 }
 
 .site-title {
@@ -90,6 +107,17 @@
 
 .katex {
   font-size: 1.1em;
+}
+
+/* RTL specific adjustments */
+.rtl .katex {
+  direction: ltr; /* Keep math formulas LTR */
+  text-align: left;
+}
+
+.rtl pre, .rtl code {
+  direction: ltr; /* Keep code blocks LTR */
+  text-align: left;
 }
 
 /* Responsive Design */

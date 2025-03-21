@@ -95,6 +95,9 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
 
 
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir.css" rel="stylesheet" type="text/css" />
+
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         renderMathInElement(document.body, {
@@ -109,7 +112,7 @@
     });
 </script>
 
-<div class="single-container">
+<div class="single-container ">
   <header>
     
 
@@ -389,6 +392,20 @@ In this article, we explored the reinforcement learning process, particularly th
   line-height: 1.6;
 }
 
+ 
+.rtl {
+  direction: rtl;
+  font-family: Vazir, monospace;
+}
+
+.rtl .content-title {
+  font-family: Vazir, 'Times New Roman', serif;
+}
+
+.rtl .site-title {
+  font-family: Vazir, 'Times New Roman', serif;
+}
+
 .site-title {
   font-size: 2.5rem;
   font-weight: normal;
@@ -431,6 +448,17 @@ In this article, we explored the reinforcement learning process, particularly th
 
 .katex {
   font-size: 1.1em;
+}
+
+ 
+.rtl .katex {
+  direction: ltr;  
+  text-align: left;
+}
+
+.rtl pre, .rtl code {
+  direction: ltr;  
+  text-align: left;
 }
 
  
