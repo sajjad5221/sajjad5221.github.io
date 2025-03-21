@@ -1,45 +1,43 @@
-baseURL = "http://localhost:1313"
-languageCode = "en-us"
-title = "Sajjad Momeni"
-theme = "typo"
+baseURL = 'https://sajjad5221.github.io/'
+languageCode = 'en-us'
+title = 'My Blog'
+theme = 'PaperMod'
 
 # Main menu configuration
 [[menu.main]]
 identifier = "home"
+name = "Home"
 url = "/"
-weight = 1
-
-[[menu.main]]
-identifier = "blogs"
-url = "/blogs/"
-weight = 2
-
-[[menu.main]]
-identifier = "posts"
-url = "/posts/"
-weight = 3
+weight = -100
+pre = "home"
 
 [[menu.main]]
 identifier = "about"
-url = "/about/"
-weight = 4
+name = "About"
+url = "/about"
+weight = -90
+pre = "user"
 
 [[menu.main]]
-identifier = "library"
-url = "/library/"
-weight = 5
+identifier = "search"
+name = "Search"
+url = "/search"
+weight = -80
+pre = "search"
 
 [params]
-  defaultTheme = "dark"
-  description = "A blog about Machine Learning and AI"
-  menu = ["home", "blogs", "posts", "about", "library"]
-  
-  [params.menuNames]
-    home = "home"
-    blogs = "blogs"
-    posts = "posts"
-    about = "about"
-    library = "library"
+  env = "production"
+  description = "My personal blog"
+  keywords = ["blog", "personal", "technology"]
+  defaultTheme = "auto"
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowRssButtonInSectionTermList = true
+  UseHugoToc = true
 
 [markup]
   [markup.goldmark]
@@ -55,3 +53,6 @@ weight = 5
 [taxonomies]
   category = "categories"
   tag = "tags"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
