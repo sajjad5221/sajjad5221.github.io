@@ -1,62 +1,71 @@
+# 🏆 Professional Summary  
+A dynamic, multi-functional, slightly sleep-deprived individual who somehow juggles AI research, running a company, and the occasional existential crisis—which I try to solve by reading books and listening to podcasts, but so far, not very successfully. Passionate about protein generation with transformers (not the Optimus Prime kind, unfortunately) and making Landa a global success—one chaotic role at a time. Also, I love having my own startup and making big plans that may or may not make sense.  
+
 ---
-title: "About Me"
-date: 2024-03-20
-draft: false
+
+## 🎓 Education  
+
+### 📜 Master’s Degree in Artificial Intelligence  
+**Islamic Azad University (2021 – 2023)**  
+
+*Thesis:* *"Protein Generation with Transformers"* (a.k.a. convincing AI to create random proteins and pretending I understand them)  
+
+### 📜 Bachelor’s Degree in Computer Software Engineering  
+**Sharekord University (2015 – 2020)**  
+
+Where I learned to hate math and life while pretending to understand what a pointer is.  
+
 ---
 
-Hi, I'm Sajjad Momeni, a Machine Learning Engineer and AI enthusiast. I'm passionate about developing intelligent systems and solving complex problems using artificial intelligence.
+## 💼 Work Experience  
 
-I specialize in:
-- Machine Learning
-- Deep Learning
-- Natural Language Processing
-- Computer Vision
+### **Landa Holding**  
+🧑‍🚀 *I don't know what I do*  
+📅 *2022 – Present*  
 
-Through this blog, I share my experiences, insights, and knowledge about AI and Machine Learning. Feel free to connect with me through the social links or email if you'd like to discuss AI, collaborate on projects, or just have a chat about technology.
+- Some days, I’m a Scrum Master yelling at Microsoft Planner.  
+- Other days, I’m a Product Manager pretending to have a roadmap.  
+- Occasionally, I’m the Assistant to the CEO.  
 
-## Experience
+### **Islamic Azad University**  
+📚 *Teaching Assistant (C/C++, Algorithms)*  
+📅 *Nov 2022 – Jun 2023*  
 
-### Landa Holding
-- **Scrum Master** (Aug 2023 - Present)  
-  Leading agile teams and optimizing development processes
-- **Full Stack Developer** (Apr 2023 - Aug 2023)  
-  Developing and maintaining web applications
+- Taught students how to debug their code without crying.  
+- Explained pointers in C++ without losing my own sanity.  
 
-### Islamic Azad University
-- **Teaching Assistant** (Nov 2022 - Jun 2023)  
-  Assisting in programming courses (C/C++)
+### **Zarifmosavar**  
+🛠 *Full-Stack Developer*  
+📅 *Apr 2021 – Jun 2022*  
 
-### Zarif Mosavar
-- **Full Stack Developer** (Apr 2021 - Jun 2022)  
-  Building and managing web applications
+- Built web applications with Vue.js and Laravel.  
 
-### B&F Services Ltd
-- **Backend Developer** (Feb 2020 - Dec 2020)  
-  Developing server-side logic
+### **B&F Services Ltd**  
+🖥 *Back-End Developer*  
+📅 *Feb 2020 – Dec 2020*  
 
-### Avana
-- **Web Developer** (Aug 2019 - Feb 2020)  
-  Designing and implementing website features
+- Developed back-end magic using PHP, Symfony, and OpenCart.  
+- Survived legacy code that looked older than me.  
 
-## Education
+### **AVANA**  
+💻 *Web Developer*  
+📅 *Aug 2019 – Feb 2020*  
 
-- **MSc in Artificial Intelligence** (2021 - 2023)  
-  Islamic Azad University  
-  Thesis: Protein Generation with Transformer Networks
+---
 
-- **BSc in Computer Software Engineering** (2015 - 2020)  
-  Shahrekord University
+## 🛠 Skills  
 
-- **Diploma in Mathematics and Physics** (2010 - 2014)  
-  Imam Mohammad Bagher High School
+✅ **AI & Machine Learning** – Making AI do cool things (sometimes intentionally).  
+✅ **Full-Stack Development** – Laravel, Vue.js, FastAPI, PHP, Symfony, and more.  
+✅ **Python & C++** – Writing code that may or may not work on the first run.  
+✅ **Git & Linux** – Because real developers love command-line pain.  
+✅ **Explaining AI** – Successfully taught my mother about ChatGPT. Next challenge: teaching my sister.  
 
-## Top Skills
+---
 
-- FastAPI
-- Machine Learning
-- Symfony Framework
-- Programming (C/C++)
+## 🎯 Future Goals  
 
-## Contact Me
-
-You can reach me via [email](mailto:sajjad5221@gmail.com) or [LinkedIn](https://linkedin.com/in/sajjad-momeni) and [GitHub](https://github.com/sajjad5221). 
+- Start a PhD and convince every member of my family it’s worth it.  
+- Turn my AI-powered protein generator into a startup (or a sci-fi horror story).  
+- Decide on a single job title.  
+- Finally chill out on a beach in Spain.  
