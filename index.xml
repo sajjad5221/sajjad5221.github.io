@@ -44,7 +44,7 @@ We&amp;rsquo;ve achieved peak of data and there is no more data to be collected&
 
 &lt;figure class="">
 
- &lt;div>
+ &lt;div class="img-container" style="--w: 840; --h: 560;">
  &lt;img loading="lazy" alt="راه‌آهن اصفهان" src="/posts/other/qeshm-trip/rahahan-esfahan.png" width="840" height="560">
  &lt;/div>
 
