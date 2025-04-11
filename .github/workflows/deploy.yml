@@ -1,0 +1,25 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # or master, depending on your default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # This is important!
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      # Your other build steps here...
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # This is provided by GitHub automatically
+          publish_dir: ./public  # Adjust this to your build output directory
