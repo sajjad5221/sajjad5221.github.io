@@ -1,8 +1,7 @@
-baseURL = '/'
-languageCode = 'en-us'
-defaultContentLanguage = 'en-us'
-title = 'My Blog'
-theme = 'typo'
+baseURL = "https://sajjad5221.github.io/"
+languageCode = "en-us"
+title = "My personal blog"
+theme = "typo"
 relativeURLs = true
 uglyURLs = false
 canonifyURLs = false
