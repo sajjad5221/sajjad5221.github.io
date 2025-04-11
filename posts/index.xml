@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Sajjad Momeni</title><link>/posts/</link><description>Recent content in Posts on Sajjad Momeni</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 20 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>DeepSeek: A Deep Dive into the Next Generation Language Model</title><link>/posts/research/what-is-deepseek/</link><pubDate>Wed, 20 Mar 2024 00:00:00 +0000</pubDate><guid>/posts/research/what-is-deepseek/</guid><description>&lt;ul>
+&lt;li>chain of thought
+what are good criteria for a good chain of thought?&lt;/li>
+&lt;li>correct CoT&lt;/li>
+&lt;li>continuous reasoning -&amp;gt; easy to understand, no hidden states&lt;/li>
+&lt;li>contain trial and error&lt;/li>
+&lt;/ul>
+&lt;p>how to find chain of thought?&lt;/p>
+&lt;ul>
+&lt;li>internet? no&lt;/li>
+&lt;li>textbooks? no&lt;/li>
+&lt;li>papers? no&lt;/li>
+&lt;li>&amp;hellip;&lt;/li>
+&lt;/ul>
+&lt;p>data is the fossil fuel of AI
+We&amp;rsquo;ve achieved peak of data and there is no more data to be collected&lt;/p>
+&lt;p>DeepSeek R1 is important not just because of what it can do, but because of how it does it.&lt;/p></description></item><item><title>جنایت و مکافات: تحلیل یک شاهکار ادبی</title><link>/posts/books/jenayat_mokafat/</link><pubDate>Wed, 20 Mar 2024 00:00:00 +0000</pubDate><guid>/posts/books/jenayat_mokafat/</guid><description>&lt;h2 class="heading" id="مقدمه">
+ مقدمه
+ &lt;a class="anchor" href="#%d9%85%d9%82%d8%af%d9%85%d9%87">#&lt;/a>
+&lt;/h2>
+&lt;p>کتاب &lt;em>جنایت و مکافات&lt;/em> یکی از مشهورترین آثار فئودور داستایوفسکی است که به بررسی عمیق مسائل اخلاقی، فلسفی، و روان‌شناختی می‌پردازد. این رمان داستان یک دانشجوی فقیر به نام &lt;strong>راسکولنیکف&lt;/strong> را روایت می‌کند که درگیر اندیشه‌های پیچیده درباره عدالت و اخلاق می‌شود و تصمیم می‌گیرد مرتکب قتلی شود که آن را از نظر خودش موجه می‌داند. اما پس از ارتکاب جنایت، او به تدریج درگیر عذاب وجدان و بحران‌های روحی شدیدی می‌شود.&lt;/p></description></item><item><title>Building a Transformer from Scratch: My Journey into the Heart of Modern AI</title><link>/posts/research/my-transformers-journy/</link><pubDate>Wed, 13 Mar 2024 00:00:00 +0000</pubDate><guid>/posts/research/my-transformers-journy/</guid><description>&lt;h2 class="heading" id="introduction">
+ Introduction
+ &lt;a class="anchor" href="#introduction">#&lt;/a>
+&lt;/h2>
+&lt;p>When I first encountered transformer models like GPT and BERT, they seemed like magical black boxes. The capabilities were impressive, but I wanted to understand what was happening under the hood. So I embarked on a journey to build a transformer from scratch, component by component.&lt;/p>
+&lt;p>In this post, I&amp;rsquo;ll share what I learned, the challenges I faced, and the code I wrote to implement a GPT-style transformer model in PyTorch. By the end, I hope you&amp;rsquo;ll have a deeper understanding of how these powerful models work.&lt;/p></description></item><item><title>Reinforcement Learning Process and Its Application in Complex Problems</title><link>/posts/research/lunar-lander/</link><pubDate>Wed, 13 Mar 2024 00:00:00 +0000</pubDate><guid>/posts/research/lunar-lander/</guid><description>&lt;p>Reinforcement Learning (RL) is a significant branch of machine learning where an agent interacts with an environment and improves its behavior based on the rewards it receives. In this article, we will explore the reinforcement learning process, answer some of your questions, and provide a complete example with Python code, including explanations of arrays, matrices, and the model training process.&lt;/p>
+&lt;hr>
+&lt;h2 class="heading" id="1-introduction-to-reinforcement-learning">
+ 1. Introduction to Reinforcement Learning
+ &lt;a class="anchor" href="#1-introduction-to-reinforcement-learning">#&lt;/a>
+&lt;/h2>
+&lt;p>In reinforcement learning, an agent is placed in an environment and takes various actions to change its state. After each action, the agent receives a reward. The ultimate goal is to learn an optimal policy that selects actions in each state to maximize long-term rewards.&lt;/p></description></item><item><title>روز اول سفر به قشم – ماجراهای قطار و اولین آشنایی‌ها</title><link>/posts/other/qeshm-trip/</link><pubDate>Thu, 15 Jun 2023 00:00:00 +0000</pubDate><guid>/posts/other/qeshm-trip/</guid><description>&lt;p>همه چیز از صبح روز اول شروع شد. مهدی و محمدرضا اومدن دنبالم و منم تند تند وسایلم رو جمع کردم. مامانم برامون یه کم بندری آماده کرده بود، داغ داغ برش داشتم و دویدم دم در. چمدون‌ها رو بار زدیم و راه افتادیم به سمت ایستگاه قطار اصفهان. بعد از گذاشتن وسایل توی دستگاه ایکس‌ری، رفتیم سمت قطار.&lt;/p>
+&lt;p>
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure class="">
+
+ &lt;div>
+ &lt;img loading="lazy" alt="راه‌آهن اصفهان" src="/posts/other/qeshm-trip/rahahan-esfahan.png" width="840" height="560">
+ &lt;/div>
+
+ 
+&lt;/figure>
+&lt;/p>
+&lt;h4 class="heading" id="ماجراهای-کوپهنشینی">
+ &lt;strong>ماجراهای کوپه‌نشینی!&lt;/strong>
+ &lt;a class="anchor" href="#%d9%85%d8%a7%d8%ac%d8%b1%d8%a7%d9%87%d8%a7%db%8c-%da%a9%d9%88%d9%be%d9%87%d9%86%d8%b4%db%8c%d9%86%db%8c">#&lt;/a>
+&lt;/h4>
+&lt;p>بلیطم برای یه کوپه جدا از دوستام بود. وقتی وارد کوپه شدم، یه خانواده نشسته بودن. مسئول قطار اومد و گفت:&lt;br>
+&lt;strong>«آقای مومنی، میشه لطفاً جاتون رو عوض کنید تا این خانواده راحت‌تر باشن؟»&lt;/strong>&lt;br>
+گفتم: &lt;strong>«آره بابا، برای من که فرقی نداره، میرم کوپه بغلی.»&lt;/strong>&lt;br>
+رفتم نشستم تو کوپه بغلی که بعد چند دقیقه دو تا دختر اومدن نشستن. دوباره مسئول قطار اومد و گفت:&lt;br>
+&lt;strong>«میشه بری کوپه بعدی؟»&lt;/strong>&lt;br>
+گفتم: &lt;strong>«آقا جان مسخره‌مون کردی؟ خودم چند دقیقه دیگه میرم پیش دوستام، نیاز نیست هی منو بلند کنی!»&lt;/strong> 😆&lt;/p></description></item><item><title/><link>/posts/other/english-class/speaking-1/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/posts/other/english-class/speaking-1/</guid><description>&lt;p>to be interested in =-=-&amp;gt;i like it&lt;/p>
+&lt;p>to be keen on =-==-to be adroit =-=-euphimisitically&lt;/p>
+&lt;p>to be passionate about&lt;/p>
+&lt;p>to be enthusisatic(adj) about&lt;/p>
+&lt;p>to have enthususaism(n.) for&lt;/p>
+&lt;p>to have an affinity for-with&lt;/p>
+&lt;p>i have an affinity for horses&lt;/p>
+&lt;p>Infinitive vs gerund&lt;/p>
+&lt;p>Infinitive:&lt;/p>
+&lt;ul>
+&lt;li>The infinitive is the base form of a verb, often preceded by &amp;ldquo;to&amp;rdquo; (e.g., to go, to eat, to study).&lt;/li>
+&lt;/ul>
+&lt;p>examples:&lt;/p>
+&lt;ul>
+&lt;li>She wants to go to the park.&lt;/li>
+&lt;li>He needs to study for the IELTS.&lt;/li>
+&lt;/ul>
+&lt;p>Gerund:&lt;/p></description></item></channel></rss>

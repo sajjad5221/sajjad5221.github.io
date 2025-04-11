@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Language-Models on Sajjad Momeni</title><link>/tags/language-models/</link><description>Recent content in Language-Models on Sajjad Momeni</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 20 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="/tags/language-models/index.xml" rel="self" type="application/rss+xml"/><item><title>DeepSeek: A Deep Dive into the Next Generation Language Model</title><link>/posts/research/what-is-deepseek/</link><pubDate>Wed, 20 Mar 2024 00:00:00 +0000</pubDate><guid>/posts/research/what-is-deepseek/</guid><description>&lt;ul>
+&lt;li>chain of thought
+what are good criteria for a good chain of thought?&lt;/li>
+&lt;li>correct CoT&lt;/li>
+&lt;li>continuous reasoning -&amp;gt; easy to understand, no hidden states&lt;/li>
+&lt;li>contain trial and error&lt;/li>
+&lt;/ul>
+&lt;p>how to find chain of thought?&lt;/p>
+&lt;ul>
+&lt;li>internet? no&lt;/li>
+&lt;li>textbooks? no&lt;/li>
+&lt;li>papers? no&lt;/li>
+&lt;li>&amp;hellip;&lt;/li>
+&lt;/ul>
+&lt;p>data is the fossil fuel of AI
+We&amp;rsquo;ve achieved peak of data and there is no more data to be collected&lt;/p>
+&lt;p>DeepSeek R1 is important not just because of what it can do, but because of how it does it.&lt;/p></description></item></channel></rss>
