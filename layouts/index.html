@@ -4,7 +4,15 @@
 </head>
 <div class="home-container">
   <header>
-    {{ partial "nav.html" . }}
+    {{ if templates.Exists "partials/nav.html" }}
+      {{ partial "nav.html" . }}
+    {{ else }}
+      <!-- Fallback navigation -->
+      <nav>
+        <a href="/">Home</a>
+        <a href="/posts">Posts</a>
+      </nav>
+    {{ end }}
   </header>
 
   <main>
@@ -99,4 +107,4 @@
   }
 }
 </style>
-{{ end }} 
+{{ end }}
